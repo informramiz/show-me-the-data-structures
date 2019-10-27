@@ -13,7 +13,7 @@ from queue import PriorityQueue
 
 
 class Node(object):
-    def __init__(self, character, frequency):
+    def __init__(self, character = None, frequency = None):
         self.character = character
         self.frequency = frequency
         self.left = None
@@ -31,11 +31,54 @@ class Node(object):
         return str(f"Node({self.character, self.frequency})")
 
 
+def build_huffman_tree(char_count_dict):
+    """
+    The simplest construction algorithm uses a priority queue where the node with lowest probability is given highest priority:
+
+    1. Create a leaf node for each symbol and add it to the priority queue.
+    2. While there is more than one node in the queue:
+        2.1. Remove the two nodes of highest priority (lowest probability) from the queue
+        2.2. Create a new internal node with these two nodes as children and with probability equal to the sum of the two nodes' probabilities.
+        2.3. Add the new node to the queue.
+    3. The remaining node is the root node and the tree is complete.
+
+    reference: https://en.wikipedia.org/wiki/Huffman_coding
+
+    :param char_count_dict: dict
+    :return: Node
+    """
+    queue = PriorityQueue()
+    for char, count in char_count_dict.items():
+        queue.put(Node(char, count))
+
+    while queue.qsize() > 1:
+        min1, min2 = (queue.get(), queue.get())
+        new_node = Node(frequency=min1.frequency + min2.frequency)
+        new_node.left = min1
+        new_node.right = min2
+        queue.put(new_node)
+
+    return queue.get()
+
+
+def huffman_encoding(text):
+    if text is None or len(text) == 0:
+        return None, None
+
+    char_count_dict = {}
+    for char in text:
+        char_count_dict[char] = char_count_dict.get(char, 0) + 1
+
+    tree = build_huffman_tree(char_count_dict)
+    print(tree)
+
 def test():
     q = PriorityQueue()
-    q.put(Node('c', 1))
-    q.put(Node('c', 2))
-    print(q.get())
-    print(q.get())
+    q.put_nowait(Node('c', 1))
+    q.put_nowait(Node('c', 2))
+    print(q.get_nowait())
+
+    text = "The bird is the word"
+    huffman_encoding(text)
 
 test()
