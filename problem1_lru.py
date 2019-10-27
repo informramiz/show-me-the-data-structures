@@ -30,7 +30,7 @@ from collections import OrderedDict
 class LRU_Cache(object):
     def __init__(self, capacity):
         if capacity == 0:
-            raise Exception("Capacity can not be 0")
+            raise Exception("Capacity can not be 0, minimum capacity is 1")
 
         # Initialize class variables
         self._capacity = capacity
@@ -64,7 +64,7 @@ class LRU_Cache(object):
         # edge case
         if key is None:
             # key can't be None
-            raise Exception("Key can not be None")
+            return
 
         # check for capacity full
         if len(self._items) == self._capacity:
