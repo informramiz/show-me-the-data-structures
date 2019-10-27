@@ -60,5 +60,8 @@ def test_cases():
     print(files)
     assert (files == [])
 
+    # empty suffix
+    files = find_files("", "testdir")  # should return all files, not adding assert because on Mac there are extra files (.DS_Store) so assert will fail even if code correct
+    print(files)
 
 test_cases()
