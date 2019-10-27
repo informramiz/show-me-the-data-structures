@@ -112,9 +112,42 @@ def huffman_encoding(text):
     return tree, ''.join(codes)
 
 
+def huffman_decoding(tree, coded_data):
+    """
+        Traverses the tree and decodes coded_data back to proper text
+        Args:
+            tree(Node): Root node of huffman tree
+            coded_data(str): A string representing data in coded form
+        Returns:
+            str: A dictionary containing letter codes
+    """
+    if tree is None or coded_data is None:
+        return None
+
+    letters = []
+    node = tree
+    # for each bit in coded_data, traverse the tree to find the letter at leaf node, then restart
+    for c in coded_data:
+        if c == '0':
+            node = node.left
+        else:
+            node = node.right
+
+        if node.is_leaf_node():
+            # reached leaf node, only leaf nodes contain characters
+            letters.append(node.character)
+            # search for this code is complete, restart the search for next bits
+            node = tree
+
+    return ''.join(letters)
+
+
 def test():
     text = "The bird is the word"
     tree, code = huffman_encoding(text)
-    print(code)
+    decoded_text = huffman_decoding(tree, code)
+    print(text)
+    assert(text == decoded_text)
+
 
 test()
