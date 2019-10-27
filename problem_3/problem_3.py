@@ -107,15 +107,14 @@ def huffman_encoding(text):
 
     tree = build_huffman_tree(char_count_dict)
     letter_codes_dict = find_letter_codes(tree)
-    print(letter_codes_dict)
+
+    codes = [letter_codes_dict[c] for c in text]
+    return tree, ''.join(codes)
+
 
 def test():
-    q = PriorityQueue()
-    q.put_nowait(Node('c', 1))
-    q.put_nowait(Node('c', 2))
-    print(q.get_nowait())
-
     text = "The bird is the word"
-    huffman_encoding(text)
+    tree, code = huffman_encoding(text)
+    print(code)
 
 test()
