@@ -10,6 +10,7 @@ As a common convention, bit '0' represents following the left child and bit '1' 
 """
 
 from queue import PriorityQueue
+import sys
 
 
 class Node(object):
@@ -142,12 +143,26 @@ def huffman_decoding(tree, coded_data):
     return ''.join(letters)
 
 
-def test():
-    text = "The bird is the word"
-    tree, code = huffman_encoding(text)
-    decoded_text = huffman_decoding(tree, code)
-    print(text)
-    assert(text == decoded_text)
+def test_case(a_great_sentence):
+    print("\n-------Test-----------")
+    tree, encoded_data = huffman_encoding(a_great_sentence)
+    decoded_data = huffman_decoding(tree, encoded_data)
+
+    print("The size of the data is: {}".format(sys.getsizeof(a_great_sentence)))
+    print("The content of the data is: {}\n".format(a_great_sentence))
+
+    print("The size of the encoded data is: {}".format(sys.getsizeof(int(encoded_data, base=2))))
+    print("The content of the encoded data is: {}\n".format(encoded_data))
+
+    print("The size of the decoded data is: {}".format(sys.getsizeof(decoded_data)))
+    print("The content of the encoded data is: {}".format(decoded_data))
+    assert(a_great_sentence == decoded_data)
 
 
-test()
+def run_test_cases():
+    test_case("The bird is the word")
+    test_case("My name is Ramiz")
+    test_case("a + b = c + d")
+
+
+run_test_cases()
