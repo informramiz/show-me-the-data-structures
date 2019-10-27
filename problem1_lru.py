@@ -76,8 +76,10 @@ class LRU_Cache(object):
     def __repr__(self):
         return str(self._items)
 
+
 def assert_(expected, actual):
     assert expected == actual, f"expected={expected}, actual={actual}"
+
 
 def test_cases():
     our_cache = LRU_Cache(5)
@@ -105,6 +107,7 @@ def test_cases():
     # edge cases
     our_cache.set(None, None)
     our_cache.get(None)
+
 
 test_cases()
 
