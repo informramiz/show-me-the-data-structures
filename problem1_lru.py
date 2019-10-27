@@ -78,6 +78,7 @@ class LRU_Cache(object):
 
 
 def assert_(expected, actual):
+    print(actual)
     assert expected == actual, f"expected={expected}, actual={actual}"
 
 
@@ -106,7 +107,13 @@ def test_cases():
 
     # edge cases
     our_cache.set(None, None)
-    our_cache.get(None)
+    output = our_cache.get(None) # should return -1
+    assert_(-1, output)
+
+    # check for different type keys like for example: string keys
+    our_cache.set("hello", -8)
+    output = our_cache.get("hello") # should return -8
+    assert_(-8, output)
 
 
 test_cases()
