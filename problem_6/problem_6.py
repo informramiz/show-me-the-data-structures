@@ -63,6 +63,11 @@ class LinkedList:
 
 
 def union(llist_1, llist_2):
+    if llist_1 is None:
+        return llist_2
+    elif llist_2 is None:
+        return llist_1
+
     l1_set = set(llist_1)
     l2_set = set(llist_2)
     union_result = l1_set.union(l2_set)
@@ -74,9 +79,19 @@ def union(llist_1, llist_2):
 
 
 def intersection(llist_1, llist_2):
-    # Your Solution Here
-    pass
+    if llist_1 is None:
+        return LinkedList()
+    elif llist_2 is None:
+        return LinkedList()
 
+    l1_set = set(llist_1)
+    l2_set = set(llist_2)
+    intersection_result = l1_set.intersection(l2_set)
+    intersection_result_linked_list = LinkedList()
+    for value in intersection_result:
+        intersection_result_linked_list.append(value)
+
+    return intersection_result_linked_list
 
 def test():
     # Test case 1
