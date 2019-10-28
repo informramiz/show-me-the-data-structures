@@ -64,6 +64,26 @@ class BlockChain:
 
         return None
 
+    def delete(self, data):
+        if self.is_empty():
+            return False
+
+        if self.tail.data == data:
+            self.tail = self.tail.previous_hash
+            self.size -= 1
+            return True
+
+        block = self.tail
+        while block.previous_hash and block.previous_hash.data != data:
+            block = block.previous_hash
+
+        if block.previous_hash:
+            block.previous_hash = block.previous_hash.previous_hash
+            self.size -= 1
+            return True
+
+        return False
+
     def to_list(self):
         blocks = []
         block = self.tail
@@ -104,5 +124,14 @@ def test():
     print(search_result)  # should print None
     assert (search_result is None)
 
-    
+    # Test-1 Delete
+    block_chain.delete("data1")
+    print(len(block_chain))  # should print 1
+    assert(len(block_chain) == 1)
+    # Test-2 Delete
+    block_chain.delete("data2")
+    print(len(block_chain))  # should print 0
+    assert(len(block_chain) == 0)
+
+
 test()
