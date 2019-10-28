@@ -119,6 +119,22 @@ def test_cases():
     output = our_cache.get("hello") # should return -8
     assert_(-8, output)
 
+    # update the value of an existing key
+    our_cache.set(1, 10)
+    our_cache.set(2, 11)
+    print(our_cache.get(1))  # should print 10
+    assert(our_cache.get(1) == 10)
+
+    print(our_cache.get(2))  # should print 11
+    assert(our_cache.get(2) == 11)
+
+    # 0 capacity cache
+    zero_capacity_cache = LRU_Cache(0)
+    zero_capacity_cache.set(1, 10) # should print warning message
+    output = zero_capacity_cache.get(1)  # should print warning message and return -1
+    print(output)
+    assert (output is -1)
+
 
 test_cases()
 
