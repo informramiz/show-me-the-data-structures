@@ -93,6 +93,9 @@ def find_letter_codes(node):
     letter_codes_dict = {}
     if node is None:
         return letter_codes_dict
+    elif node.is_leaf_node():  # handle single node use case
+        letter_codes_dict[node.character] = "0"
+        return letter_codes_dict
 
     __find_letter_codes(node, letter_codes_dict)
     return letter_codes_dict
@@ -128,17 +131,21 @@ def huffman_decoding(tree, coded_data):
     letters = []
     node = tree
     # for each bit in coded_data, traverse the tree to find the letter at leaf node, then restart
-    for c in coded_data:
-        if c == '0':
-            node = node.left
-        else:
-            node = node.right
-
-        if node.is_leaf_node():
-            # reached leaf node, only leaf nodes contain characters
+    if node.is_leaf_node():  # single node tree, special case
+        for _ in coded_data:
             letters.append(node.character)
-            # search for this code is complete, restart the search for next bits
-            node = tree
+    else:
+        for c in coded_data:
+            if c == '0':
+                node = node.left
+            else:
+                node = node.right
+
+            if node.is_leaf_node():
+                # reached leaf node, only leaf nodes contain characters
+                letters.append(node.character)
+                # search for this code is complete, restart the search for next bits
+                node = tree
 
     return ''.join(letters)
 
@@ -155,7 +162,7 @@ def test_case(a_great_sentence):
     print("The content of the encoded data is: {}\n".format(encoded_data))
 
     print("The size of the decoded data is: {}".format(sys.getsizeof(decoded_data)))
-    print("The content of the encoded data is: {}".format(decoded_data))
+    print("The content of the decoded data is: {}".format(decoded_data))
     assert(a_great_sentence == decoded_data)
 
 
@@ -163,6 +170,13 @@ def run_test_cases():
     test_case("The bird is the word")
     test_case("My name is Ramiz")
     test_case("a + b = c + d")
+
+    # repetitive alphabet
+    test_case("aaaaa")
+    test_case("bbbbbbbb")
+    test_case("aaaaabbbbccccc")
+
+    
 
 
 run_test_cases()
