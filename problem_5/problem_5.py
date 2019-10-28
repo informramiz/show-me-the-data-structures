@@ -32,6 +32,7 @@ class Block:
 class BlockChain:
     def __init__(self):
         self.tail = None
+        self.size = 0
 
     def append(self, data):
         time = datetime.datetime.utcnow().strftime("%d/%m/%y %H:%M:%S")
@@ -42,6 +43,11 @@ class BlockChain:
         else:
             block.previous_hash = self.tail
             self.tail = block
+
+        self.size += 1
+
+    def __len__(self):
+        return self.size
 
     def to_list(self):
         blocks = []
@@ -67,5 +73,6 @@ def test():
     block_chain.append("data1")
     block_chain.append("data2")
     print(block_chain.to_list())
+    print(len(block_chain))
 
 test()
