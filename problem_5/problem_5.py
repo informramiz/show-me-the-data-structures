@@ -52,6 +52,15 @@ class BlockChain:
 
         return blocks
 
+    def __iter__(self):
+        block = self.tail
+        while block:
+            yield block
+            block = block.previous_hash
+
+    def __repr__(self):
+        return str([b for b in self])
+
 
 def test():
     block_chain = BlockChain()
