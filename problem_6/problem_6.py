@@ -61,9 +61,17 @@ class LinkedList:
             yield node.value
             node = node.next
 
+
 def union(llist_1, llist_2):
-    # Your Solution Here
-    pass
+    l1_set = set(llist_1)
+    l2_set = set(llist_2)
+    union_result = l1_set.union(l2_set)
+    union_result_linked_list = LinkedList()
+    for value in union_result:
+        union_result_linked_list.append(value)
+
+    return union_result_linked_list
+
 
 def intersection(llist_1, llist_2):
     # Your Solution Here
@@ -85,8 +93,8 @@ def test():
     for i in element_2:
         linked_list_2.append(i)
 
-    print(linked_list_1.to_list())
-    # print (union(linked_list_1,linked_list_2))
+    union_output = union(linked_list_1,linked_list_2).to_list()
+    print(union_output)  # should print [32, 65, 2, 35, 3, 4, 6, 1, 9, 11, 21]
     # print (intersection(linked_list_1,linked_list_2))
     #
     # # Test case 2
