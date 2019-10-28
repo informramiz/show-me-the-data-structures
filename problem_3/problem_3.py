@@ -102,7 +102,11 @@ def find_letter_codes(node):
 
 
 def huffman_encoding(text):
-    if text is None or len(text) == 0:
+    if not isinstance(text, str):
+        print("Invalid Data!")
+        return None, None
+    elif text is None or len(text) == 0:
+        print("Empty Data!")
         return None, None
 
     char_count_dict = {}
@@ -125,7 +129,11 @@ def huffman_decoding(tree, coded_data):
         Returns:
             str: A dictionary containing letter codes
     """
-    if tree is None or coded_data is None:
+    if not isinstance(tree, Node) or not isinstance(coded_data, str):
+        print("Invalid Data!")
+        return None
+    elif tree is None or coded_data is None or len(coded_data) == 0:
+        print("Empty tree or coded data!")
         return None
 
     letters = []
