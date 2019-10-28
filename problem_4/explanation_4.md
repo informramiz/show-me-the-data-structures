@@ -2,4 +2,4 @@
 
 **Time Complexity:** Let's say the max groups inside any group is (recursive tree width) `w` and and the maximum depth of any group (depth of recursive tree) is `d` then time complexity for this task is `O(w*d)`
 
-**Space Complexity:** My solution never stores anything explicitly and only space used is due to recursion (call stack), so space complexity is `O(n)` where n is the maximum depth of a any group (depth of recursion tree).
+**Space Complexity:** My solution never stores anything explicitly and only space used is due to recursion (call stack), so space complexity is `O(n)` where n is the maximum depth out of a any group (the depth of recursion tree).
