@@ -43,9 +43,20 @@ class BlockChain:
             block.previous_hash = self.tail
             self.tail = block
 
+    def to_list(self):
+        blocks = []
+        block = self.tail
+        while block:
+            blocks.append(block)
+            block = block.previous_hash
+
+        return blocks
+
 
 def test():
     block_chain = BlockChain()
-
+    block_chain.append("data1")
+    block_chain.append("data2")
+    print(block_chain.to_list())
 
 test()
