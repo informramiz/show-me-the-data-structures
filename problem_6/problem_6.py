@@ -70,14 +70,23 @@ def union(llist_1, llist_2):
     elif llist_2 is None:
         return llist_1
 
-    l1_set = set(llist_1)
-    l2_set = set(llist_2)
-    union_result = l1_set.union(l2_set)
-    union_result_linked_list = LinkedList()
-    for value in union_result:
-        union_result_linked_list.append(value)
+    # a common dictionary/hashtable to maintain elements encountered in both lists,
+    # I am dict for fast insert/search operations to keep my overall time complexity minimum
+    common_dict = {}
 
-    return union_result_linked_list
+    # go through first list and mark items encountered
+    for item in llist_1:
+        common_dict[item] = True
+    # go through second list and mark items encountered
+    for item in llist_2:
+        common_dict[item] = True
+
+    # now add items encountered in either list to resultant list
+    union_linked_list = LinkedList()
+    for item, status in common_dict.items():
+        union_linked_list.append(item)
+
+    return union_linked_list
 
 
 def intersection(llist_1, llist_2):
