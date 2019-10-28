@@ -49,6 +49,21 @@ class BlockChain:
     def __len__(self):
         return self.size
 
+    def is_empty(self):
+        return len(self) == 0
+
+    def search(self, data):
+        if self.is_empty():
+            return None
+
+        block = self.tail
+        while block:
+            if block.data == data:
+                return block
+            block = block.previous_hash
+
+        return None
+
     def to_list(self):
         blocks = []
         block = self.tail
@@ -72,7 +87,22 @@ def test():
     block_chain = BlockChain()
     block_chain.append("data1")
     block_chain.append("data2")
-    print(block_chain.to_list())
-    print(len(block_chain))
 
+    # Test Append
+    output = block_chain.to_list()
+    output = [b.data for b in output]
+    print(output) # should print data2, data1
+    assert (output == ["data2", "data1"])
+
+    # Test-1 Search
+    search_result = block_chain.search("data1")
+    print(search_result.data) # should print data1
+    assert(search_result.data == 'data1')
+
+    # Test-2 Search
+    search_result = block_chain.search("data5")
+    print(search_result)  # should print None
+    assert (search_result is None)
+
+    
 test()
