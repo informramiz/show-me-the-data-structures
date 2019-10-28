@@ -29,9 +29,6 @@ from collections import OrderedDict
 
 class LRU_Cache(object):
     def __init__(self, capacity):
-        if capacity == 0:
-            raise Exception("Capacity can not be 0, minimum capacity is 1")
-
         # Initialize class variables
         self._capacity = capacity
         # pop, delete and append operations of OrderedDict are O(1) as it is a high performance Python container
@@ -41,6 +38,9 @@ class LRU_Cache(object):
 
     def get(self, key):
         # Retrieve item from provided key. Return -1 if nonexistent.
+        if self._capacity == 0:
+            print("Can't perform operations on 0 capacity cache")
+            return -1
 
         # edge case
         if key is None:
@@ -61,6 +61,10 @@ class LRU_Cache(object):
 
     def set(self, key, value):
         # Set the value if the key is not present in the cache. If the cache is at capacity remove the oldest item.
+        if self._capacity == 0:
+            print("Can't perform operations on 0 capacity cache")
+            return
+
         # edge case
         if key is None:
             # key can't be None
