@@ -174,12 +174,20 @@ def test():
     expected_intersection_output = []
     test_case(element_1, element_2, expected_union_output, expected_intersection_output)
 
-    # Test case 4
+    # Test case 5
     print("--------> Test-5")
     union_output = union(None, None).to_list()
     print(union_output)  # should print []
     assert(union_output == [])
     intersection_output = intersection(None, None).to_list()
+    print(intersection_output)  # should print []
+
+    # Test case 6
+    print("--------> Test-6")
+    union_output = union(None, LinkedList()).to_list()
+    print(union_output)  # should print []
+    assert (union_output == [])
+    intersection_output = intersection(LinkedList(), None).to_list()
     print(intersection_output)  # should print []
 
 
