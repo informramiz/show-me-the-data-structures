@@ -53,13 +53,13 @@ class LinkedList:
         return size
 
     def to_list(self):
-        node = self.head
-        items = []
-        while node:
-            items.append(node.value)
-            node = node.next
+        return [n for n in self]
 
-        return items
+    def __iter__(self):
+        node = self.head
+        while node:
+            yield node.value
+            node = node.next
 
 def union(llist_1, llist_2):
     # Your Solution Here
@@ -85,8 +85,7 @@ def test():
     for i in element_2:
         linked_list_2.append(i)
 
-    print(linked_list_1)
-
+    print(linked_list_1.to_list())
     # print (union(linked_list_1,linked_list_2))
     # print (intersection(linked_list_1,linked_list_2))
     #
