@@ -184,7 +184,16 @@ def run_test_cases():
     test_case("bbbbbbbb")
     test_case("aaaaabbbbccccc")
 
-    
+    # empty input
+    print("----Edge input related cases----")
+    huffman_encoding(None)  # should print "Invalid Data!"
+    huffman_encoding("")  # should print "empty data"
+    huffman_decoding(None, None)  # should print "Invalid Data!"
+    huffman_decoding(Node(), "")  # should print "Empty tree or coded data!"
+
+    # invalid input
+    huffman_encoding(123) # should print "invalid data"
+    huffman_decoding(Node(), 123) # should print "invalid data"
 
 
 run_test_cases()
