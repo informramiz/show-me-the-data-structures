@@ -95,14 +95,25 @@ def intersection(llist_1, llist_2):
     elif llist_2 is None:
         return LinkedList()
 
-    l1_set = set(llist_1)
-    l2_set = set(llist_2)
-    intersection_result = l1_set.intersection(l2_set)
-    intersection_result_linked_list = LinkedList()
-    for value in intersection_result:
-        intersection_result_linked_list.append(value)
+    # a common dictionary/hashtable to maintain elements encountered in both lists,
+    # I am dict for fast insert/search operations to keep my overall time complexity minimum
+    common_dict = {}
 
-    return intersection_result_linked_list
+    # go through first list and mark items encountered with value 1 (only 1
+    for item in llist_1:
+        common_dict[item] = 1
+
+    # go through second list and mark items encountered by increasing the counter of that item
+    for item in llist_2:
+        if common_dict.get(item, 0) != 0:
+            common_dict[item] = common_dict[item] + 1
+
+    # add items that are counted at least 2 times
+    intersection_list = LinkedList()
+    for item, count in common_dict.items():
+        if count >= 2:
+            intersection_list.append(item)
+    return intersection_list
 
 
 def test_case(list1, list2, expected_union_sorted_output, expected_intersection_sorted_output):
