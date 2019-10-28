@@ -63,7 +63,9 @@ class LinkedList:
 
 
 def union(llist_1, llist_2):
-    if llist_1 is None:
+    if llist_1 is None and llist_2 is None:
+        return LinkedList()
+    elif llist_1 is None:
         return llist_2
     elif llist_2 is None:
         return llist_1
@@ -93,40 +95,72 @@ def intersection(llist_1, llist_2):
 
     return intersection_result_linked_list
 
-def test():
-    # Test case 1
 
+def test_case(list1, list2, expected_union_sorted_output, expected_intersection_sorted_output):
     linked_list_1 = LinkedList()
     linked_list_2 = LinkedList()
 
-    element_1 = [3,2,4,35,6,65,6,4,3,21]
-    element_2 = [6,32,4,9,6,1,11,21,1]
-
-    for i in element_1:
+    for i in list1:
         linked_list_1.append(i)
 
-    for i in element_2:
+    for i in list2:
         linked_list_2.append(i)
 
-    union_output = union(linked_list_1,linked_list_2).to_list()
-    print(union_output)  # should print [32, 65, 2, 35, 3, 4, 6, 1, 9, 11, 21]
-    # print (intersection(linked_list_1,linked_list_2))
-    #
-    # # Test case 2
-    #
-    # linked_list_3 = LinkedList()
-    # linked_list_4 = LinkedList()
-    #
-    # element_1 = [3,2,4,35,6,65,6,4,3,23]
-    # element_2 = [1,7,8,9,11,21,1]
-    #
-    # for i in element_1:
-    #     linked_list_3.append(i)
-    #
-    # for i in element_2:
-    #     linked_list_4.append(i)
-    #
-    # print (union(linked_list_3,linked_list_4))
-    # print (intersection(linked_list_3,linked_list_4))
+    union_output = union(linked_list_1, linked_list_2).to_list()
+    # NOTE: I am sorting the output so that I can add asserts otherwise order will be not defined
+    union_output.sort()
+    print(union_output)
+    assert (union_output == expected_union_sorted_output)
+
+    intersection_output = intersection(linked_list_1, linked_list_2).to_list()
+    # NOTE: I am sorting the output so that I can add asserts otherwise order will be not defined
+    intersection_output.sort()
+    print(intersection_output)
+    assert (intersection_output == expected_intersection_sorted_output)
+
+
+def test():
+    # Test case 1
+    print("--------> Test-1")
+    element_1 = [3,2,4,35,6,65,6,4,3,21]
+    element_2 = [6,32,4,9,6,1,11,21,1]
+    expected_union_output = [1, 2, 3, 4, 6, 9, 11, 21, 32, 35, 65]
+    expected_intersection_output = [4, 6, 21]
+    test_case(element_1, element_2, expected_union_output, expected_intersection_output)
+
+
+    # Test case 2
+    print("--------> Test-2")
+    element_1 = [3,2,4,35,6,65,6,4,3,23]
+    element_2 = [1,7,8,9,11,21,1]
+    expected_union_output = [1, 2, 3, 4, 6, 7, 8, 9, 11, 21, 23, 35, 65]
+    expected_intersection_output = []
+    test_case(element_1, element_2, expected_union_output, expected_intersection_output)
+
+    # Test case 3
+    print("--------> Test-3")
+    element_1 = [5, 6, 4, -1]
+    element_2 = [1, 2, 3, -1]
+    expected_union_output = [-1, 1, 2, 3, 4, 5, 6]
+    expected_intersection_output = [-1]
+    test_case(element_1, element_2, expected_union_output, expected_intersection_output)
+
+    # Edge cases
+    # Test case 4
+    print("--------> Test-4")
+    element_1 = []
+    element_2 = []
+    expected_union_output = []
+    expected_intersection_output = []
+    test_case(element_1, element_2, expected_union_output, expected_intersection_output)
+
+    # Test case 4
+    print("--------> Test-5")
+    union_output = union(None, None).to_list()
+    print(union_output)  # should print []
+    assert(union_output == [])
+    intersection_output = intersection(None, None).to_list()
+    print(intersection_output)  # should print []
+
 
 test()
