@@ -43,6 +43,10 @@ class BlockChain:
         self.size = 0
 
     def append(self, data):
+        if data is None:
+            print("Can not add block without any data!")
+            return
+
         time = datetime.datetime.utcnow().strftime("%d/%m/%y %H:%M:%S")
         block = Block(time, data)
 
@@ -66,6 +70,9 @@ class BlockChain:
         return len(self) == 0
 
     def search(self, data):
+        if data is None:
+            return None
+
         """ Search the linked list for a node with the requested value and return the node. """
         node = self.head
         while node:
@@ -76,6 +83,10 @@ class BlockChain:
 
     def delete(self, data):
         """ Remove first occurrence of value. """
+
+        if data is None:
+            return False
+
         if self.is_empty():
             return False
 
@@ -152,5 +163,18 @@ def test():
     print(len(block_chain))  # should print 0
     assert(len(block_chain) == 1)
 
+    # Edge cases
+    # Don't pass any data to append
+    block_chain.append(None)  # should print "Can not add block without any data!"
+    # make sure chain length is still the same as previously
+    assert(len(block_chain) == 1)
+
+    # Delete value by pass None
+    result = block_chain.delete(None)  # should return False
+    print(result) # should print False
+
+    # try printing a block chain without any block init
+    empty_block_chain = BlockChain()
+    print(empty_block_chain)  # should print []
 
 test()
