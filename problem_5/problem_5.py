@@ -96,11 +96,12 @@ class BlockChain:
             return True
 
         node = self.head
-        while node.next and node.next.value != data:
+        while node.next and node.next.value.data != data:
             node = node.next
 
         if node.next:
             node.next = node.next.next
+            node.next.value.previous_hash = node.value.hash
             self.size -= 1
             return True
 
@@ -155,12 +156,15 @@ def test():
     assert (search_result is None)
 
     # Test-1 Delete
+    block_chain.delete("data2")
+    print(len(block_chain))  # should print 2
+    print(block_chain) # should print [Block(data1, ...), Block(data3, ...)]
+    assert(len(block_chain) == 2)
+    test_hash_equality(block_chain.to_list())
+
+    # Test-2 Delete
     block_chain.delete("data1")
     print(len(block_chain))  # should print 1
-    assert(len(block_chain) == 2)
-    # Test-2 Delete
-    block_chain.delete("data2")
-    print(len(block_chain))  # should print 0
     assert(len(block_chain) == 1)
 
     # Edge cases
