@@ -133,24 +133,24 @@ def test():
     output = [b.data for b in output] # simplifying output for assert
     assert (output == ["data1", "data2", "data3"])
 
-    # # Test-1 Search
-    # search_result = block_chain.search("data1")
-    # print(search_result.data) # should print data1
-    # assert(search_result.data == 'data1')
-    #
+    # Test-1 Search
+    search_result = block_chain.search("data1")
+    print(search_result.value) # should print (data1, time, hash, prev_has)
+    assert(search_result.value.data == 'data1')
+
     # # Test-2 Search
-    # search_result = block_chain.search("data5")
-    # print(search_result)  # should print None
-    # assert (search_result is None)
-    #
-    # # Test-1 Delete
-    # block_chain.delete("data1")
-    # print(len(block_chain))  # should print 1
-    # assert(len(block_chain) == 1)
-    # # Test-2 Delete
-    # block_chain.delete("data2")
-    # print(len(block_chain))  # should print 0
-    # assert(len(block_chain) == 0)
+    search_result = block_chain.search("data5")
+    print(search_result)  # should print None
+    assert (search_result is None)
+
+    # Test-1 Delete
+    block_chain.delete("data1")
+    print(len(block_chain))  # should print 1
+    assert(len(block_chain) == 2)
+    # Test-2 Delete
+    block_chain.delete("data2")
+    print(len(block_chain))  # should print 0
+    assert(len(block_chain) == 1)
 
 
 test()
